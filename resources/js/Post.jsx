@@ -19,7 +19,8 @@ function Post() {
     return (
         <div>
             <h1>{post.title}</h1>
-            <p>{post.content}</p>
+            <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} />
+            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
         </div>
     );
 }
