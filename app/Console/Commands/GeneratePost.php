@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Post;
+use App\Models\Topic; // Import the Topic model
 use App\Services\OpenAIService;
 use Illuminate\Support\Str;
 
@@ -11,16 +12,6 @@ class GeneratePost extends Command
 {
     protected $signature = 'generate:post';
     protected $description = 'Generate a new blog post using OpenAI ChatGPT';
-    
-    protected $topics = [
-        'The future of internal communications',
-        'Digital internal communications',
-        'Employee engagement in internal communications',
-        'Data-led communications solutions',
-        'Digital transformation in communications',
-        'Internet solutions for internal communication',
-        'Line manager communications strategies',
-    ];
 
     protected $openAIService;
 
@@ -32,8 +23,17 @@ class GeneratePost extends Command
 
     public function handle()
     {
-        // Select a random topic
-        $topic = $this->topics[array_rand($this->topics)];
+        // Fetch all topics from the database
+        $topics = Topic::all();
+
+        // If no topics are available, exit with an error message
+        if ($topics->isEmpty()) {
+            $this->error('No topics available in the database. Please add some topics first.');
+            return;
+        }
+
+        // Select a random topic from the database
+        $topic = $topics->random()->title;
 
         // Add some prompt variations to avoid repetitive content
         $promptVariations = [
