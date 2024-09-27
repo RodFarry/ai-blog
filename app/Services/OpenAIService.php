@@ -44,27 +44,42 @@ class OpenAIService
 
     public function generatePostImage($prompt) {
         try {
-            // Call the correct OpenAI API endpoint for image generation
+            // Get image URL from OpenAI
             $response = $this->client->post('https://api.openai.com/v1/images/generations', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,  // Authorization with API key
+                    'Authorization' => 'Bearer ' . $this->apiKey,
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
                     'prompt' => $prompt,
-                    'n' => 1,  // Number of images to generate
-                    'size' => '1024x1024',  // Image size
+                    'n' => 1,
+                    'size' => '1024x1024',
                 ],
             ]);
     
-            // Return the image URL from the API response
             $data = json_decode($response->getBody(), true);
-            return $data['data'][0]['url'];
+            $imageUrl = $data['data'][0]['url'];
+    
+            // Ensure the 'images' folder exists in the 'public' directory
+            $imageDirectory = public_path('images');
+            if (!is_dir($imageDirectory)) {
+                mkdir($imageDirectory, 0755, true); // Create the directory with proper permissions
+            }
+    
+            // Download and save the image locally
+            $imageContents = file_get_contents($imageUrl);
+            $imageName = 'post_image_' . time() . '.png'; // Create a unique image name
+            $imagePath = $imageDirectory . '/' . $imageName;
+    
+            file_put_contents($imagePath, $imageContents); // Save the image to your public/images folder
+    
+            // Return the image URL that can be accessed publicly
+            return url('images/' . $imageName);
+    
         } catch (\Exception $e) {
             \Log::error('Error generating image: ' . $e->getMessage());
-            return null;  // Return null or a fallback image if the image generation fails
+            return null; // Return null or a default image if there's an error
         }
-    }
-    
+    }    
     
 }
