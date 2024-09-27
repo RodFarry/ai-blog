@@ -37,11 +37,16 @@ class GeneratePost extends Command
 
         // Add some prompt variations to avoid repetitive content
         $promptVariations = [
-            "Write a futuristic blog post about {$topic}.",
-            "Write a blog post about {$topic} from the perspective of a startup.",
-            "Discuss the benefits and challenges of {$topic} in internal communications.",
-            "Explain how {$topic} has evolved in the digital age.",
-            "How can {$topic} improve employee engagement?"
+            "Write a comprehensive blog post about {$topic}.",
+            "Discuss the major trends and future developments related to {$topic}.",
+            "What are the key benefits and challenges of {$topic}?",
+            "How does {$topic} impact the industry it relates to?",
+            "Explain how {$topic} has changed or evolved over time.",
+            "What are the best strategies for implementing {$topic}?",
+            "Write a blog post exploring the relationship between {$topic} and technology.",
+            "What are the ethical considerations around {$topic}?",
+            "Discuss the historical context and future possibilities for {$topic}.",
+            "How can {$topic} improve the overall performance in any organization?"
         ];
         
         $prompt = $promptVariations[array_rand($promptVariations)];
