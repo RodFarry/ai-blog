@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Internal Communications Blog</title>
+        <title>Blog</title>
         <!-- Vite will inject React app here -->
         @viteReactRefresh
         @vite('resources/js/app.jsx')
