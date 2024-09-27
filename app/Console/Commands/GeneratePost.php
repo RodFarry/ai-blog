@@ -48,7 +48,7 @@ class GeneratePost extends Command
 
         // Generate content in HTML format using OpenAI
         try {
-            $content = $this->openAIService->generatePostContent("Write a blog post in HTML format about {$topic}. Ensure the response includes appropriate HTML tags and remove any 'title' heading from the response.");
+            $content = $this->openAIService->generatePostContent("Write a blog post in HTML format about {$topic}. Ensure the response is in British English, includes appropriate HTML tags, and remove any 'title' heading from the response.");
 
             // Check for duplicates based on content similarity
             $existingPost = Post::where('content', 'like', '%' . Str::limit($content, 100) . '%')->first();
