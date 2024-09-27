@@ -35,7 +35,7 @@ class GeneratePost extends Command
         // Select a random topic from the database
         $topic = $topics->random()->title;
 
-        // Add some prompt variations to avoid repetitive content
+        // Add some dynamic prompt variations to avoid repetitive content
         $promptVariations = [
             "Write a comprehensive blog post about {$topic}.",
             "Discuss the major trends and future developments related to {$topic}.",
@@ -49,6 +49,7 @@ class GeneratePost extends Command
             "How can {$topic} improve the overall performance in any organization?"
         ];
         
+        // Select a random prompt variation
         $prompt = $promptVariations[array_rand($promptVariations)];
 
         // Generate content in HTML format using OpenAI
