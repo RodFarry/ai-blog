@@ -10,4 +10,14 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'excerpt', 'content', 'image', 'category', 'tags'];
+
+    public function getTagsAttribute($value) {
+        $tags = json_decode($value, true);
+
+        if (is_array($tags) && isset($tags['tags'])) {
+            return $tags['tags'];
+        }
+
+        return is_array($tags) ? $tags : [];
+    }
 }
